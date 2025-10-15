@@ -54,3 +54,13 @@ export function saveState(data) {
   state = data;
   localStorage.setItem('state', JSON.stringify(state));
 }
+
+let account = $state(null);
+
+export function getAccount() {
+  return account;
+}
+
+export function setAccount(accountName) {
+  account = accountName;
+}
