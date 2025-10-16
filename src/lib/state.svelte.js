@@ -6,43 +6,11 @@ export function getState() {
     if (state === null) {
       saveState({
         profiles: {
-          Aster: {
-            presets: {
-              default: {
-                temperature: 100,
-                pressure: 60
-              },
-              cold: {
-                temperature: 80,
-                pressure: 60
-              }
-            }
+          "Profile 1": {
+            temperature: 100,
+            pressure: 60,
           },
-          Kaleb: {
-            presets: {
-              default: {
-                temperature: 100,
-                pressure: 60
-              }
-            }
-          },
-          Divyesh: {
-            presets: {
-              default: {
-                temperature: 100,
-                pressure: 60
-              }
-            }
-          },
-          Logan: {
-            presets: {
-              default: {
-                temperature: 100,
-                pressure: 60
-              }
-            }
-          }
-        }
+        },
       });
     }
   }
