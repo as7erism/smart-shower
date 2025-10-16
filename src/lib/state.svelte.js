@@ -6,11 +6,11 @@ export function getState() {
     if (state === null) {
       saveState({
         profiles: {
-          "Profile 1": {
+          'Profile 1': {
             temperature: 100,
-            pressure: 60,
-          },
-        },
+            pressure: 60
+          }
+        }
       });
     }
   }
