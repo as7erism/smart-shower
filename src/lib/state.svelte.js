@@ -10,6 +10,10 @@ export function getState() {
             temperature: 100,
             pressure: 60
           }
+        },
+        settings: {
+          'temperatureUnit': 'F',
+          'pressureUnit': 'PSI'
         }
       });
     }
