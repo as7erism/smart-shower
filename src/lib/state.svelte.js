@@ -12,8 +12,8 @@ export function getState() {
           }
         },
         settings: {
-          'temperatureUnit': 'F',
-          'pressureUnit': 'PSI'
+          temperatureUnit: 'F',
+          pressureUnit: 'PSI'
         }
       });
     }
