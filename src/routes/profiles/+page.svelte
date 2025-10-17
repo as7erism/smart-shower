@@ -18,16 +18,16 @@
 
   function nameChangeCallbackFactory(index) {
     return (newName) => {
-      for (const {name} of profiles) {
+      for (const { name } of profiles) {
         if (name == newName) {
-          window.alert("BAD DOG");
+          window.alert('BAD DOG');
           return false;
         }
       }
 
       profiles[index].name = newName;
       return true;
-    }
+    };
   }
 
   function saveProfiles() {
@@ -35,14 +35,13 @@
     let profilesObject = {};
     for (const profile of profiles) {
       profilesObject[profile.name] = {};
-      profilesObject[profile.name]["temperature"] = profile.temperature;
-      profilesObject[profile.name]["pressure"] = profile.pressure;
+      profilesObject[profile.name]['temperature'] = profile.temperature;
+      profilesObject[profile.name]['pressure'] = profile.pressure;
     }
     state.profiles = profilesObject;
     console.log(`saving ${JSON.stringify(state)}`);
     saveState(state);
   }
-
 </script>
 
 {#each profiles as _, i}
@@ -54,9 +53,10 @@
   />
 {/each}
 
-
-<button onclick={() => profiles.push({name: `${Date.now()}`, temperature: 100, pressure: 60})}>add</button>
-<br>
+<button onclick={() => profiles.push({ name: `${Date.now()}`, temperature: 100, pressure: 60 })}
+  >add</button
+>
+<br />
 <button onclick={() => window.alert(JSON.stringify(profiles))}>check the thing</button>
-<br>
+<br />
 <button onclick={saveProfiles}>save</button>

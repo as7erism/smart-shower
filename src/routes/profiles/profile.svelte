@@ -11,10 +11,10 @@
 </script>
 
 <input bind:value={internalName} onchange={tryNameChange} />
-<br>
+<br />
 <label for={`${name}Temperature`}>temperature:</label>
 <input id={`${name}Temperature`} type="range" bind:value={temperature} />
-<br>
+<br />
 <label for={`${name}Pressure`}>pressure:</label>
 <input id={`${name}Pressure`} type="range" bind:value={pressure} />
-<br>
+<br />
