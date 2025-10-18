@@ -39,8 +39,28 @@
       profilesObject[profile.name]['pressure'] = profile.pressure;
     }
     state.profiles = profilesObject;
-    console.log(`saving ${JSON.stringify(state)}`);
     saveState(state);
+  }
+
+  function newProfileName() {
+    const regex = /^Profile (?<num>\d+)$/;
+    const profileNumbers = [];
+    for (const profile of profiles) {
+      const match = profile.name.match(regex);
+      if (match) {
+        profileNumbers.push(parseInt(match.groups["num"]));
+      }
+    }
+
+    let i = 1;
+    while (true) {
+      if (!(profileNumbers.includes(i))) {
+        break;
+      }
+      i++;
+    }
+
+    return `Profile ${i}`;
   }
 </script>
 
@@ -53,7 +73,7 @@
   />
 {/each}
 
-<button onclick={() => profiles.push({ name: `${Date.now()}`, temperature: 100, pressure: 60 })}
+<button onclick={() => profiles.push({ name: newProfileName(), temperature: 100, pressure: 60 })}
   >add</button
 >
 <br />
