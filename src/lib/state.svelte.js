@@ -1,6 +1,7 @@
 let state = $state(undefined);
 
 export function getState() {
+  if (typeof window === 'undefined') return state;
   if (state === undefined) {
     state = JSON.parse(localStorage.getItem('state'));
     if (state === null) {
@@ -8,12 +9,23 @@ export function getState() {
         profiles: {
           'Profile 1': {
             temperature: 100,
-            pressure: 60
+            pressure: 60,
+            color: 'green'
+          },
+          'Profile 2': {
+            temperature: 93,
+            pressure: 56,
+            color: 'red'
+          },
+          'Profile 3': {
+            temperature: 93,
+            pressure: 56,
+            color: 'blue'
           }
         },
         settings: {
-          'temperatureUnit': 'F',
-          'pressureUnit': 'PSI'
+          temperatureUnit: 'F',
+          pressureUnit: 'PSI'
         }
       });
     }
