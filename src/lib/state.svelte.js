@@ -1,7 +1,6 @@
 let state = $state(undefined);
 
 export function getState() {
-  if (typeof window === 'undefined') return state;
   if (state === undefined) {
     state = JSON.parse(localStorage.getItem('state'));
     if (state === null) {
