@@ -34,7 +34,7 @@
       <div class="flex justify-center">
         <button
           class="bg-gray-700 text-white text-xl px-6 py-6 rounded-lg font-bold shadow-md"
-          on:click={() => {alert('Edit Profiles clicked');}}
+          onclick={() => {alert('Edit Profiles clicked');}}
         >
           Edit Profiles
         </button>
