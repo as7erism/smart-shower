@@ -7,7 +7,7 @@
   import Countdown from '$lib/components/Countdown.svelte';
 
   let profiles = $state();
-  let testProfiles = $state();
+  let settings = $state();
 
   onMount(() => {
     let stateData = getState();
@@ -15,6 +15,8 @@
       name,
       ...data
     }));
+    settings = stateData.settings;
+    console.log(settings);
   });
 
   let showCountdown = $state(false);
