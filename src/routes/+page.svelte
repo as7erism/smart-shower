@@ -7,14 +7,9 @@
   import Countdown from '$lib/components/Countdown.svelte';
 
   let profiles = $state();
-  let testProfiles = $state();
-
   onMount(() => {
-    let stateData = getState();
-    profiles = Object.entries(stateData.profiles).map(([name, data]) => ({
-      name,
-      ...data
-    }));
+    const stateData = getState();
+    profiles = Object.entries(stateData.profiles);
   });
 
   let showCountdown = $state(false);
@@ -31,16 +26,14 @@
     <div class="mx-auto">
       {#if profiles && profiles.length}
         <div class="grid grid-cols-3 gap-4 mb-12">
-          {#each profiles as item, i (item.id ?? i)}
+          {#each profiles as [name, profile]}
             <Profile
-              name={item.name}
-              temp={item.temperature}
-              pressure={item.pressure}
-              color={item.color}
+              {name}
+              {profile}
               callback={() => {
                 showCountdown = true;
                 let state = getState();
-                state.currentProfile = item.name;
+                state.currentProfile = name;
                 saveState(state);
               }}
             />
@@ -53,7 +46,7 @@
       <div class="flex justify-center">
         <button
           class="bg-gray-700 text-white text-xl px-6 py-6 rounded-lg font-bold shadow-md"
-          onclick={() => goto("/profiles")}
+          onclick={() => goto('/profiles')}
         >
           Edit Profiles
         </button>
@@ -64,6 +57,6 @@
 
 {#if showCountdown}
   <div class="fixed inset-0 flex items-center justify-center z-50">
-    <Countdown {cancelStart} goToHome={() => goto("/shower")}/>
+    <Countdown {cancelStart} goToHome={() => goto('/shower')} />
   </div>
 {/if}
