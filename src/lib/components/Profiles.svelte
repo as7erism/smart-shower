@@ -1,13 +1,13 @@
 <script>
   import '../../app.css';
 
-  let { name, temp, pressure, color, callback } = $props();
+  let { name, profile, callback } = $props();
 </script>
 
 <button
   type="button"
   class="w-44 p-4 rounded-xl shadow-xl"
-  style="background-color: {color};"
+  style="background-color: {profile.color};"
   onclick={callback}
 >
   <div class="space-y-3">
@@ -17,11 +17,11 @@
 
     <div class="space-y-2">
       <div class="flex items-center justify-center px-2">
-        <p class="text-xl text-white font-bold">{temp}°F</p>
+        <p class="text-xl text-white font-bold">{profile.temperature}°F</p>
       </div>
 
       <div class="flex items-center justify-center px-2">
-        <p class="text-xl text-white font-bold">{pressure} PSI</p>
+        <p class="text-xl text-white font-bold">{profile.pressure} PSI</p>
       </div>
     </div>
   </div>
