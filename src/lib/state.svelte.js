@@ -17,9 +17,14 @@ export function getState() {
             color: 'red'
           },
           'Profile 3': {
-            temperature: 93,
-            pressure: 56,
+            temperature: 97,
+            pressure: 58,
             color: 'blue'
+          },
+          'Profile 4': {
+            temperature: 84,
+            pressure: 49,
+            color: 'orange'
           }
         },
         settings: {

@@ -1,15 +1,19 @@
 <script>
   import Profile from '$lib/components/Profiles.svelte';
   import Countdown from '$lib/components/Countdown.svelte';
-  import { getState } from '$lib/testState.svelte.js';
+  import { getState } from '$lib/state.svelte.js';
+  import { onMount } from 'svelte';
 
-  let stateData = getState();
-  let profiles = stateData?.profiles
-    ? Object.entries(stateData.profiles).map(([name, data]) => ({
-        name,
-        ...data
-      }))
-    : [];
+  let profiles = $state();
+  let testProfiles = $state();
+
+  onMount(() => {
+    let stateData = getState();
+    profiles = Object.entries(stateData.profiles).map(([name, data]) => ({
+      name,
+      ...data
+    }));
+  });
 
   let showCountdown = $state(false);
 
