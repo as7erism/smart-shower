@@ -2,6 +2,7 @@
   import { goto } from '$app/navigation';
   import { getState } from '$lib/state.svelte';
   import { onMount } from 'svelte';
+  import SettingsPopup from '$lib/components/SettingsPopup.svelte';
 
   import Profile from '$lib/components/Profiles.svelte';
 
@@ -35,12 +36,14 @@
     profiles = state.profiles;
     currentProfile = state.currentProfile;
   });
+
+  let showSettings = $state(false);
 </script>
 
 <div class="h-screen">
   <div class="flex p-4">
     <div class="flex-1">
-      <button title="settings" onclick={goto('/settings')}>
+      <button title="settings" onclick={() => (showSettings = true)}>
         <svg
           version="1.0"
           xmlns="http://www.w3.org/2000/svg"
@@ -146,5 +149,11 @@
         </div>
       </div>
     </div>
+  </div>
+{/if}
+
+{#if showSettings}
+  <div class="fixed inset-0 flex items-center justify-center z-50">
+    <SettingsPopup toggleSettings={() => (showSettings = !showSettings)} />
   </div>
 {/if}

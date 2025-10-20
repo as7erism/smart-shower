@@ -13,7 +13,6 @@
     const stateData = getState();
     profiles = Object.entries(stateData.profiles);
     settings = stateData.settings;
-    console.log(settings);
   });
 
   let showCountdown = $state(false);
@@ -40,6 +39,7 @@
                 state.currentProfile = name;
                 saveState(state);
               }}
+              {settings}
             />
           {/each}
         </div>
