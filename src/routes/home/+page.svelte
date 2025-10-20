@@ -2,6 +2,7 @@
   import { getState } from '$lib/state.svelte';
   import { onMount } from 'svelte';
   import Thermometer from './thermometer.svelte';
+  import Pressure from './pressure.svelte';
 
   onMount(() => {
     let state = getState();
@@ -14,3 +15,5 @@
 <Thermometer initialTemperature={92} />
 
 <Thermometer initialTemperature={30} />
+
+<Pressure initialPressure={40}/>
