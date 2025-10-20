@@ -1,14 +1,14 @@
 <script>
   import '../../app.css';
 
-  let { name, temp, pressure, color, startCountdown } = $props();
+  let { name, temp, pressure, color, callback } = $props();
 </script>
 
 <button
   type="button"
   class="w-44 p-4 rounded-xl shadow-xl"
   style="background-color: {color};"
-  onclick={startCountdown}
+  onclick={callback}
 >
   <div class="space-y-3">
     <p class="text-3xl font-bold text-center text-white drop-shadow-md">{name}</p>
