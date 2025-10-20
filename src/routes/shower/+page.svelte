@@ -16,6 +16,11 @@
         currentTime = getCurrentTime(new Date())
         elapsedTime = getElapsedTime(startTime)
     }, 1000);
+
+    let dropDownHidden = $state(true);
+    const toggleDropdown = () => {dropDownHidden = !dropDownHidden};
+
+    let currentProfile = $state({name: 'TeeHee'});
 </script>
 
 <div class="h-screen flex flex-col justify-between">
@@ -29,26 +34,30 @@
         </div>
         <div class="flex-1 flex flex-col gap-3">
             <p class="text-center">{currentTime}</p>
-            <div class="flex">
-                <p class="flex-1 text-center m-2">{elapsedTime}</p>
-                <!-- tabindex and focus hack to get a somewhat good looking dropdown-->
-                <div class="flex-1 dropdown" tabindex="-1">
-                    <div class="flex items-center bg-blue-500 rounded">
-                        <p class="m-2">Profile</p>
-                        <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12.7071 14.7071C12.3166 15.0976 11.6834 15.0976 11.2929 14.7071L6.29289 9.70711C5.90237 9.31658 5.90237 8.68342 6.29289 8.29289C6.68342 7.90237 7.31658 7.90237 7.70711 8.29289L12 12.5858L16.2929 8.29289C16.6834 7.90237 17.3166 7.90237 17.7071 8.29289C18.0976 8.68342 18.0976 9.31658 17.7071 9.70711L12.7071 14.7071Z" fill="#000000"/>
-                        </svg>
-                    </div>
-                    <div class="dropdown-content text-end">
-                        <p tabindex="-1">TeeHee</p>
-                        <p tabindex="-1">TeeHee</p>
-                        <p tabindex="-1">TeeHee</p>
+            <div class="flex gap-4">
+                <div class="flex-1 flex justify-end items-center">
+                    <p class="m-2">{elapsedTime}</p>
+                </div>
+                <div class="flex-1">
+                    <div class="w-fit relative">
+                        <div onclick={toggleDropdown} class="flex items-center bg-blue-500 rounded">
+                            <p class="m-2">{currentProfile.name}</p>
+                            <svg class="{dropDownHidden ? '' : 'rotate-x-180'}" width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M12.7071 14.7071C12.3166 15.0976 11.6834 15.0976 11.2929 14.7071L6.29289 9.70711C5.90237 9.31658 5.90237 8.68342 6.29289 8.29289C6.68342 7.90237 7.31658 7.90237 7.70711 8.29289L12 12.5858L16.2929 8.29289C16.6834 7.90237 17.3166 7.90237 17.7071 8.29289C18.0976 8.68342 18.0976 9.31658 17.7071 9.70711L12.7071 14.7071Z" fill="#000000"/>
+                            </svg>
+                        </div>
+                        <div class="{dropDownHidden ? 'hidden' : ''} absolute right-0">
+                            <!-- TODO -->
+                            <p onclick={toggleDropdown}>TeeHee</p>
+                            <p onclick={toggleDropdown}>TeeHee</p>
+                            <p onclick={toggleDropdown}>TeeHee</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <div onclick={() => goto("/")} class="flex-1 flex justify-end">
-              <p class="p-3 bg-red-500 rounded">End Shower</p>
+              <p class="h-fit p-3 bg-red-500 rounded">End Shower</p>
         </div>
     </div>
     <div class="flex justify-between">
@@ -58,13 +67,3 @@
       <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/album/4HTy9WFTYooRjE9giTmzAF?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
     </div>
 </div>
-
-<style>
-.dropdown:focus .dropdown-content {
-    display: block;
-}
-
-.dropdown-content {
-    display: none;
-}
-</style>
