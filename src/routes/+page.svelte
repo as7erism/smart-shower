@@ -1,8 +1,10 @@
 <script>
+  import { getState, saveState } from '$lib/state.svelte.js';
+  import { onMount } from 'svelte';
+  import { goto } from '$app/navigation';
+
   import Profile from '$lib/components/Profiles.svelte';
   import Countdown from '$lib/components/Countdown.svelte';
-  import { getState } from '$lib/state.svelte.js';
-  import { onMount } from 'svelte';
 
   let profiles = $state();
   let testProfiles = $state();
@@ -20,18 +22,6 @@
   function cancelStart() {
     showCountdown = false;
   }
-
-  function startCountdown() {
-    showCountdown = true;
-  }
-
-  function goToHome() {
-    window.location.href = '/test';
-  }
-
-  function goToEditProfiles() {
-    window.location.href = '/profiles';
-  }
 </script>
 
 <div class="min-h-screen flex items-center justify-center bg-gray-50">
@@ -47,7 +37,12 @@
               temp={item.temperature}
               pressure={item.pressure}
               color={item.color}
-              {startCountdown}
+              callback={() => {
+                showCountdown = true;
+                let state = getState();
+                state.currentProfile = item.name;
+                saveState(state);
+              }}
             />
           {/each}
         </div>
@@ -58,7 +53,7 @@
       <div class="flex justify-center">
         <button
           class="bg-gray-700 text-white text-xl px-6 py-6 rounded-lg font-bold shadow-md"
-          onclick={goToEditProfiles}
+          onclick={() => goto("/profiles")}
         >
           Edit Profiles
         </button>
@@ -69,6 +64,6 @@
 
 {#if showCountdown}
   <div class="fixed inset-0 flex items-center justify-center z-50">
-    <Countdown {cancelStart} {goToHome} />
+    <Countdown {cancelStart} goToHome={() => goto("/shower")}/>
   </div>
 {/if}
