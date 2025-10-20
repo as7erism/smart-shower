@@ -1,7 +1,7 @@
 <script>
   import { getState } from '$lib/state.svelte';
   import { onMount } from 'svelte';
-  import Termometer from './termometer.svelte';
+  import Thermometer from './thermometer.svelte';
 
   onMount(() => {
     let state = getState();
@@ -10,4 +10,7 @@
 </script>
 
 <h1>This is the home page</h1>
-<Termometer />
+
+<Thermometer initialTemperature={92} />
+
+<Thermometer initialTemperature={30} />
