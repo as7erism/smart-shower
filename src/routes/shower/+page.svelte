@@ -3,6 +3,8 @@
   import { getState } from '$lib/state.svelte';
   import { onMount } from 'svelte';
 
+  import Profile from '$lib/components/Profiles.svelte';
+
   const getCurrentTime = () =>
     new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
@@ -21,16 +23,16 @@
     elapsedTime = getElapsedTime(startTime);
   }, 1000);
 
-  let dropdownHidden = $state(true);
-  const toggleDropdown = () => {
-    dropdownHidden = !dropdownHidden;
+  let profilePopup = $state(false);
+  const toggleProfilePopup = () => {
+    profilePopup = !profilePopup;
   };
 
   let profiles = $state();
   let currentProfile = $state();
   onMount(() => {
     let state = getState();
-    profiles = Object.entries(state.profiles);
+    profiles = state.profiles;
     currentProfile = state.currentProfile;
   });
 </script>
@@ -68,12 +70,13 @@
         <div class="flex-1">
           <div class="relative">
             <button
-              onclick={toggleDropdown}
-              class="flex items-center bg-blue-500 rounded-t {dropdownHidden ? 'rounded-b' : ''}"
+              onclick={toggleProfilePopup}
+              class="flex items-center rounded-xl shadow-md"
+              style="background-color: {profiles ? profiles[currentProfile].color : 'blue'};"
             >
-              <p class="whitespace-nowrap m-2">{currentProfile}</p>
+              <p class="whitespace-nowrap text-white m-2">{currentProfile}</p>
               <svg
-                class={dropdownHidden ? '' : 'rotate-x-180'}
+                class={profilePopup ? 'rotate-x-180' : ''}
                 width="20px"
                 height="20px"
                 viewBox="0 0 24 24"
@@ -84,35 +87,19 @@
                   fill-rule="evenodd"
                   clip-rule="evenodd"
                   d="M12.7071 14.7071C12.3166 15.0976 11.6834 15.0976 11.2929 14.7071L6.29289 9.70711C5.90237 9.31658 5.90237 8.68342 6.29289 8.29289C6.68342 7.90237 7.31658 7.90237 7.70711 8.29289L12 12.5858L16.2929 8.29289C16.6834 7.90237 17.3166 7.90237 17.7071 8.29289C18.0976 8.68342 18.0976 9.31658 17.7071 9.70711L12.7071 14.7071Z"
-                  fill="#000000"
+                  fill="#ffffff"
                 />
               </svg>
             </button>
-            <div
-              class="{dropdownHidden
-                ? 'hidden'
-                : ''} absolute left-0 bg-gray-500 rounded-b rounded-tr"
-            >
-              {#each profiles as [name, profile]}
-                <button
-                  onclick={() => {
-                    toggleDropdown();
-                    currentProfile = name;
-                  }}
-                  class="p-2"
-                >
-                  <h3>{name}</h3>
-                  <p class="whitespace-nowrap">{profile.temperature} F {profile.pressure} PSI</p>
-                </button>
-              {/each}
-            </div>
           </div>
         </div>
       </div>
     </div>
-    <button onclick={() => goto('/')} class="flex-1 flex justify-end">
-      <p class="h-fit p-3 bg-red-500 rounded">End Shower</p>
-    </button>
+    <div class="flex-1 flex justify-end">
+      <button onclick={() => goto('/')} class="h-fit bg-red-500 rounded-xl shadow-md">
+        <p class="text-white p-2">End Shower</p>
+      </button>
+    </div>
   </div>
   <div class="flex justify-between">
     <!-- Put the dials here -->
@@ -132,3 +119,32 @@
     ></iframe>
   </div>
 </div>
+
+{#if profilePopup}
+  <div class="fixed inset-0 flex items-center justify-center z-50">
+    <div class="fixed inset-0 bg-black/35 flex items-center justify-center">
+      <div class="w-auto px-8 py-6 bg-white rounded-xl shadow-md space-y-4">
+        <div class="grid grid-cols-3 gap-4">
+          {#each Object.entries(profiles) as [name, profile]}
+            <Profile
+              {name}
+              {profile}
+              callback={() => {
+                toggleProfilePopup();
+                currentProfile = name;
+              }}
+            />
+          {/each}
+        </div>
+        <div class="flex justify-end">
+          <button
+            onclick={toggleProfilePopup}
+            class="bg-red-500 p-5 rounded-xl shadow-md text-white"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+{/if}

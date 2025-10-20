@@ -1,14 +1,14 @@
 <script>
   import '../../app.css';
 
-  let { name, temp, pressure, color, callback, settings } = $props();
+  let { name, profile, callback, settings } = $props();
   let test = $state(true);
 </script>
 
 <button
   type="button"
   class="w-44 p-4 rounded-xl shadow-xl"
-  style="background-color: {color};"
+  style="background-color: {profile.color};"
   onclick={callback}
 >
   <div class="space-y-3">
