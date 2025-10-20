@@ -31,10 +31,12 @@
 
   let profiles = $state();
   let currentProfile = $state();
+  let settings = $state();
   onMount(() => {
     let state = getState();
     profiles = state.profiles;
     currentProfile = state.currentProfile;
+    settings = state.settings;
   });
 
   let showSettings = $state(false);
@@ -136,6 +138,7 @@
                 toggleProfilePopup();
                 currentProfile = name;
               }}
+              {settings}
             />
           {/each}
         </div>
