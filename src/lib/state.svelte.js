@@ -5,6 +5,7 @@ export function getState() {
     state = JSON.parse(localStorage.getItem('state'));
     if (state === null) {
       saveState({
+        currentProfile: '',
         profiles: {
           'Profile 1': {
             temperature: 100,
