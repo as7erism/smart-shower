@@ -1,14 +1,33 @@
 <script>
   import Profile from '$lib/components/Profiles.svelte';
+  import Countdown from '$lib/components/Countdown.svelte';
   import { getState } from '$lib/testState.svelte.js';
 
-  let state = getState();
-  let profiles = state?.profiles
-    ? Object.entries(state.profiles).map(([name, data]) => ({
+  let stateData = getState();
+  let profiles = stateData?.profiles
+    ? Object.entries(stateData.profiles).map(([name, data]) => ({
         name,
         ...data
       }))
     : [];
+
+  let showCountdown = $state(false);
+
+  function cancelStart() {
+    showCountdown = false;
+  }
+
+  function startCountdown() {
+    showCountdown = true;
+  }
+
+  function goToHome() {
+    window.location.href = '/test';
+  }
+
+  function goToEditProfiles() {
+    window.location.href = '/profiles';
+  }
 </script>
 
 <div class="min-h-screen flex items-center justify-center bg-gray-50">
@@ -24,6 +43,7 @@
               temp={item.temperature}
               pressure={item.pressure}
               color={item.color}
+              {startCountdown}
             />
           {/each}
         </div>
@@ -34,7 +54,7 @@
       <div class="flex justify-center">
         <button
           class="bg-gray-700 text-white text-xl px-6 py-6 rounded-lg font-bold shadow-md"
-          onclick={() => {alert('Edit Profiles clicked');}}
+          onclick={goToEditProfiles}
         >
           Edit Profiles
         </button>
@@ -42,3 +62,9 @@
     </div>
   </div>
 </div>
+
+{#if showCountdown}
+  <div class="fixed inset-0 flex items-center justify-center z-50">
+    <Countdown {cancelStart} {goToHome} />
+  </div>
+{/if}
