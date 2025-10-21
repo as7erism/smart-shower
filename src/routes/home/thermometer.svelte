@@ -2,6 +2,10 @@
 	export let initialTemperature = 72;
 	export let initialUnit = "Fahrenheit";
 
+	const minTemp = 50;
+  	const maxTemp = 110;
+	let isCooling = false; 
+
 	let units = {
 		Celcius: "°C",
 		Fahrenheit: "°F"
@@ -23,6 +27,25 @@
 			config.minTemp = 10;
 			config.maxTemp = 45;
 		}
+	}
+
+	export function coolDown() {
+		if (isCooling) return;
+    	isCooling = true;
+		const duration = 30000;
+		const frameRate = 60;
+		const steps = duration / (1000 / frameRate);
+		let decrement = (temperatureValue - minTemp) / steps;
+		decrement = Math.round(decrement * 100) / 100;
+
+		const interval = setInterval(() => {
+		temperatureValue -= decrement;
+		temperatureValue = Math.round(temperatureValue * 100) / 100;
+		if (temperatureValue <= minTemp) {
+			temperatureValue = minTemp;
+			clearInterval(interval);
+		}
+		}, 1000 / frameRate);
 	}
 
 	// Reactive mercury height
@@ -52,15 +75,18 @@
 	let isDragging = false;
 
 	function handlePointerDown(event) {
+		if (isCooling) return;
 		isDragging = true;
 		updateTemperature(event);
 	}
 
 	function handlePointerMove(event) {
-		if (isDragging) updateTemperature(event);
+		if (isCooling || !isDragging) return;
+    	updateTemperature(event);
 	}
 
 	function handlePointerUp() {
+		if (isCooling) return;
 		isDragging = false;
 	}
 
@@ -127,7 +153,7 @@ p {
 	user-select: none;
 }
 
-/* --- Thermometer --- */
+/* Thermometer */
 #termometer {
 	width: 25px;
 	background: #38383e;
@@ -167,7 +193,7 @@ p {
 	left: 50%;
 }
 
-/* Graduations (Ticks)*/
+/* Graduations (Ticks) */
 #graduations {
 	height: 59%;
 	top: 20%;

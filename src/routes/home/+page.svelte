@@ -1,22 +1,21 @@
 <script>
-  import { getState } from '$lib/state.svelte';
-  import { onMount } from 'svelte';
   import Thermometer from './thermometer.svelte';
   import Pressure from './pressure.svelte';
   import Waterlevel from './waterlevel.svelte';
 
-  onMount(() => {
-    let state = getState();
-    console.log(`state ${JSON.stringify(state)}`);
-  });
+  let thermometerRef;
+
+  function handleDepleted() {
+    thermometerRef.coolDown();
+  }
 </script>
 
-<Waterlevel />
+<Waterlevel on:depleted={handleDepleted} />
 
 <h1>This is the home page</h1>
 
 <div>
-  <Thermometer initialTemperature={75} />
+  <Thermometer bind:this={thermometerRef} initialTemperature={75} />
   <Pressure initialPressure={40} />
 </div>
 
@@ -25,7 +24,6 @@
     display: flex;
     justify-content: space-between;
   }
-
   h1 {
     text-align: center;
     margin-top: 100px;

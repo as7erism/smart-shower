@@ -1,10 +1,13 @@
 <script>
-  import { onMount } from "svelte";
+  import { createEventDispatcher, onMount } from "svelte";
 
-  let progress = 100; 
-  let direction = -1;  
+  const dispatch = createEventDispatcher();
+
+  let progress = 100;
+  let direction = -1;
   let active = false;
   let intervalId;
+
   const duration = 60000;
   const frameRate = 60;
   const step = 100 / (duration / (1000 / frameRate));
@@ -16,9 +19,15 @@
     intervalId = setInterval(() => {
       progress += direction * step;
 
-      if (progress <= 0 || progress >= 100) {
-        direction *= -1;
-        progress = Math.max(0, Math.min(100, progress));
+      if (progress <= 0) {
+        progress = 0;
+        clearInterval(intervalId);
+        active = false;
+        dispatch("depleted");
+      }
+
+      if (progress >= 100) {
+        direction = -1;
       }
     }, 1000 / frameRate);
   }
@@ -26,38 +35,21 @@
   onMount(() => () => clearInterval(intervalId));
 </script>
 
-
 <div class="water-bg">
   <div class="water" style="height:{progress}%;">
     <div class="waves">
       <svg class="svg-track wave1" viewBox="0 0 1200 64" preserveAspectRatio="none">
-        <g>
-          <path
-            d="M0,32 C150,0 300,64 450,32 S750,0 900,32 1050,64 1200,32 V64 H0 Z"
-            fill="rgba(0,119,182,0.55)"
-          />
-          <g transform="translate(1200,0)">
-            <path
-              d="M0,32 C150,0 300,64 450,32 S750,0 900,32 1050,64 1200,32 V64 H0 Z"
-              fill="rgba(0,119,182,0.55)"
-            />
-          </g>
-        </g>
+        <path
+          d="M0,32 C150,0 300,64 450,32 S750,0 900,32 1050,64 1200,32 V64 H0 Z"
+          fill="rgba(0,119,182,0.55)"
+        />
       </svg>
 
       <svg class="svg-track wave2" viewBox="0 0 1200 64" preserveAspectRatio="none" style="top:6px">
-        <g>
-          <path
-            d="M0,32 C150,10 300,54 450,32 S750,10 900,32 1050,54 1200,32 V64 H0 Z"
-            fill="rgba(0,119,182,0.40)"
-          />
-          <g transform="translate(1200,0)">
-            <path
-              d="M0,32 C150,10 300,54 450,32 S750,10 900,32 1050,54 1200,32 V64 H0 Z"
-              fill="rgba(0,119,182,0.40)"
-            />
-          </g>
-        </g>
+        <path
+          d="M0,32 C150,10 300,54 450,32 S750,10 900,32 1050,54 1200,32 V64 H0 Z"
+          fill="rgba(0,119,182,0.40)"
+        />
       </svg>
     </div>
   </div>
