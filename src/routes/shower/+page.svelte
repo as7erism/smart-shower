@@ -129,7 +129,9 @@
   <div class="fixed inset-0 flex items-center justify-center z-50">
     <div class="fixed inset-0 bg-black/35 flex items-center justify-center">
       <div class="w-auto px-8 py-6 bg-white rounded-xl shadow-md space-y-4">
-        <div class="grid grid-cols-3 gap-4">
+        <h2 class="text-2xl font-bold text-center">Your Profiles</h2>
+        <hr class="border-t-2 border-black/30" />
+        <div class="grid grid-cols-2 gap-4">
           {#each Object.entries(profiles) as [name, profile]}
             <Profile
               {name}
@@ -142,10 +144,18 @@
             />
           {/each}
         </div>
-        <div class="flex justify-end">
+        <div class="flex justify-center">
+          <button
+            class="bg-gray-700 text-white text-xl px-5 py-3 rounded-xl shadow-md"
+            onclick={() => goto('/profiles')}
+          >
+            Edit Profiles
+          </button>
+        </div>
+        <div class="flex justify-center">
           <button
             onclick={toggleProfilePopup}
-            class="bg-red-500 p-5 rounded-xl shadow-md text-white"
+            class="bg-red-500 px-5 py-3 rounded-xl shadow-md text-white"
           >
             Cancel
           </button>
@@ -157,6 +167,12 @@
 
 {#if showSettings}
   <div class="fixed inset-0 flex items-center justify-center z-50">
-    <SettingsPopup toggleSettings={() => (showSettings = !showSettings)} />
+    <SettingsPopup
+      toggleSettings={() => (showSettings = !showSettings)}
+      refreshState={() => {
+        const s = getState();
+        settings = s.settings;
+      }}
+    />
   </div>
 {/if}
