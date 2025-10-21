@@ -14,6 +14,6 @@
 
 <Thermometer initialTemperature={92} />
 
-<Thermometer initialTemperature={30} />
+<Thermometer initialTemperature={75} />
 
 <Pressure initialPressure={40}/>
