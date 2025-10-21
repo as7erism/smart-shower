@@ -1,7 +1,7 @@
 <script>
   import '../../app.css';
 
-  let { name, profile, callback } = $props();
+  let { name, profile, callback, settings } = $props();
 </script>
 
 <button
@@ -17,11 +17,19 @@
 
     <div class="space-y-2">
       <div class="flex items-center justify-center px-2">
-        <p class="text-xl text-white font-bold">{profile.temperature}°F</p>
+        {#if settings.temperatureUnit === 'F'}
+          <p class="text-xl text-white font-bold">{profile.temperature}°F</p>
+        {:else}
+          <p class="text-xl text-white font-bold">{profile.temperature}°C</p>
+        {/if}
       </div>
 
       <div class="flex items-center justify-center px-2">
-        <p class="text-xl text-white font-bold">{profile.pressure} PSI</p>
+        {#if settings.pressureUnit === 'PSI'}
+          <p class="text-xl text-white font-bold">{profile.pressure} PSI</p>
+        {:else}
+          <p class="text-xl text-white font-bold">{profile.pressure} Bar</p>
+        {/if}
       </div>
     </div>
   </div>
