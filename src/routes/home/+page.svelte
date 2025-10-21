@@ -3,6 +3,7 @@
   import { onMount } from 'svelte';
   import Thermometer from './thermometer.svelte';
   import Pressure from './pressure.svelte';
+  import Waterlevel from './waterlevel.svelte';
 
   onMount(() => {
     let state = getState();
@@ -10,10 +11,24 @@
   });
 </script>
 
+<Waterlevel />
+
 <h1>This is the home page</h1>
 
-<Thermometer initialTemperature={92} />
+<div>
+  <Thermometer initialTemperature={75} />
+  <Pressure initialPressure={40} />
+</div>
 
-<Thermometer initialTemperature={75} />
+<style>
+  div {
+    display: flex;
+    justify-content: space-between;
+  }
 
-<Pressure initialPressure={40}/>
+  h1 {
+    text-align: center;
+    margin-top: 100px;
+    color: #000000;
+  }
+</style>
