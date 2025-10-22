@@ -30,34 +30,48 @@
   }
 </script>
 
-<div
-  class="gauge"
-  on:pointerdown={handlePointerDown}
-  on:pointermove={handlePointerMove}
-  on:pointerup={handlePointerUp}
-  on:pointerleave={handlePointerUp}
->
-  <div class="mask">
-    <div class="semi-circle"></div>
-    <div
-      class="semi-circle--mask"
-      style="transform: rotate({rotation}deg);"
-    ></div>
+<div class="outer-semi-circle">
+  <div
+    class="gauge"
+    on:pointerdown={handlePointerDown}
+    on:pointermove={handlePointerMove}
+    on:pointerup={handlePointerUp}
+    on:pointerleave={handlePointerUp}
+  >
+    <div class="mask">
+      <div class="semi-circle"></div>
+      <div
+        class="semi-circle--mask"
+        style="transform: rotate({rotation}deg);"
+      ></div>
 
-    <div
-      class="needle"
-      style="transform: rotate({rotation - 90}deg);"
-    >
-      <div class="needle-body"></div>
-      <div class="needle-tip"></div>
-      <div class="needle-hub"></div>
+      <div
+        class="needle"
+        style="transform: rotate({rotation - 90}deg);"
+      >
+        <div class="needle-body"></div>
+        <div class="needle-tip"></div>
+        <div class="needle-hub"></div>
+      </div>
     </div>
-  </div>
 
-  <div class="label">{pressureValue} PSI</div>
+    <div class="label">{pressureValue} PSI</div>
+  </div>
 </div>
 
 <style>
+  .outer-semi-circle {
+    width: 260px;
+    height: 155px;
+    background: #FFF;
+    border-radius: 155px 155px 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    margin: 2rem auto;
+    box-shadow: inset 0 -4px 8px rgba(0, 0, 0, 0.1);
+  }
+
   .gauge {
     position: relative;
     width: 220px;
@@ -175,5 +189,6 @@
     font-size: 1.3rem;
     color: #333;
     font-weight: bold;
+    padding-bottom: 5px;
   }
 </style>
