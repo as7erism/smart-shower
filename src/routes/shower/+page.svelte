@@ -4,6 +4,10 @@
   import { onMount } from 'svelte';
   import SettingsPopup from '$lib/components/SettingsPopup.svelte';
 
+  import Thermometer from '$lib/components/Thermometer.svelte';
+  import Pressure from '$lib/components/pressure.svelte';
+  import Waterlevel from '$lib/components/Waterlevel.svelte';
+
   import Profile from '$lib/components/Profiles.svelte';
 
   const getCurrentTime = () =>
@@ -32,15 +36,44 @@
   let profiles = $state();
   let currentProfile = $state();
   let settings = $state();
+  let startingTemp = $state(75);
+  let startingPressure = $state(40);
   onMount(() => {
     let state = getState();
     profiles = state.profiles;
     currentProfile = state.currentProfile;
     settings = state.settings;
+    startingTemp = profiles[currentProfile].temperature;
+    startingPressure = profiles[currentProfile].pressure;
   });
 
   let showSettings = $state(false);
+
+  let waterLevelRef;
+  let thermometerRef;
+
+  let progress = $state(75);
+  let simulationActive = $state(false);
+
+  function startSimulation() {
+    if (!waterLevelRef) return;
+    simulationActive = true;
+    waterLevelRef.startCycle();
+  }
+
+  function stopSimulation() {
+    if (!waterLevelRef) return;
+    simulationActive = false;
+    waterLevelRef.stopCycle();
+    thermometerRef.stopCooling();
+  }
+
+  function handleDepleted() {
+    thermometerRef.coolDown();
+  }
 </script>
+
+<Waterlevel bind:this={waterLevelRef} bind:progress on:depleted={handleDepleted} />
 
 <div class="h-screen">
   <div class="flex p-4">
@@ -67,10 +100,12 @@
       </button>
     </div>
     <div class="flex-1 flex flex-col gap-3">
-      <p class="text-center">{currentTime}</p>
+      <p class="text-center text-lg">{currentTime}</p>
       <div class="flex gap-4">
         <div class="flex-1 flex justify-end items-center">
-          <p class="m-2">{elapsedTime}</p>
+          <div class="bg-gray-100 rounded-lg shadow-sm px-4 py-2">
+            <p class="font-semibold">{elapsedTime}</p>
+          </div>
         </div>
         <div class="flex-1">
           <div class="relative">
@@ -106,10 +141,15 @@
       </button>
     </div>
   </div>
-  <div class="flex justify-between">
-    <!-- Put the dials here -->
+  <div class="flex justify-between mt-12">
+    <div class="mx-auto my-auto bg-white/50 rounded-xl p-6 shadow-md flex items-center">
+      <Thermometer bind:this={thermometerRef} initialTemperature={startingTemp} />
+    </div>
+    <div class="mx-auto my-auto bg-white/50 rounded-xl p-6 shadow-md flex items-center">
+      <Pressure initialPressure={startingPressure} />
+    </div>
   </div>
-  <div class="absolute bottom-0 w-screen">
+  <div class="mt-12 w-screen">
     <iframe
       title="spotifyEmbed"
       data-testid="embed-iframe"
@@ -122,6 +162,36 @@
       allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
       loading="lazy"
     ></iframe>
+  </div>
+  <p class="mt-2 text-xl text-center font-bold">Testing Area</p>
+  <div class="flex justify-center">
+    <div class="flex items-center gap-4">
+      <div class="flex gap-4">
+        {#if !simulationActive}
+          <button
+            class="bg-green-500 text-white px-6 py-3 rounded-lg font-bold shadow-md"
+            onclick={startSimulation}
+            disabled={simulationActive}
+          >
+            Start Simulation
+          </button>
+        {:else}
+          <button
+            class="bg-red-500 text-white px-6 py-3 rounded-lg font-bold shadow-md"
+            onclick={stopSimulation}
+            disabled={!simulationActive}
+          >
+            Stop Simulation
+          </button>
+        {/if}
+      </div>
+
+      <div class="flex flex-col items-center mt-4">
+        <p class="font-medium">Set Hot Water Level:</p>
+        <input id="waterLevel" type="range" min="0" max="100" bind:value={progress} class="w-54" />
+        <p class="mt-1 text-sm">Water Level: {progress.toFixed(1)}%</p>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -139,6 +209,8 @@
               callback={() => {
                 toggleProfilePopup();
                 currentProfile = name;
+                startingTemp = profiles[name].temperature;
+                startingPressure = profiles[name].pressure;
               }}
               {settings}
             />
@@ -162,6 +234,18 @@
         </div>
       </div>
     </div>
+  </div>
+{/if}
+
+{#if showSettings}
+  <div class="fixed inset-0 flex items-center justify-center z-50">
+    <SettingsPopup
+      toggleSettings={() => (showSettings = !showSettings)}
+      refreshState={() => {
+        const s = getState();
+        settings = s.settings;
+      }}
+    />
   </div>
 {/if}
 
