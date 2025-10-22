@@ -36,7 +36,7 @@
     return () => {
       profiles.splice(index, 1);
       console.log(JSON.stringify(profiles));
-    }
+    };
   }
 
   function compileProfiles(profiles) {
@@ -54,7 +54,7 @@
     let state = getState();
     state.profiles = compileProfiles(profiles);
     saveState(state);
-    window.alert("Profiles saved!");
+    window.alert('Profiles saved!');
   }
 
   function newProfileName() {
@@ -63,13 +63,13 @@
     for (const profile of profiles) {
       const match = profile.name.match(regex);
       if (match) {
-        profileNumbers.push(parseInt(match.groups["num"]));
+        profileNumbers.push(parseInt(match.groups['num']));
       }
     }
 
     let i = 1;
     while (true) {
-      if (!(profileNumbers.includes(i))) {
+      if (!profileNumbers.includes(i)) {
         break;
       }
       i++;
@@ -83,7 +83,7 @@
       name: newProfileName(),
       temperature: 100,
       pressure: 60,
-      color: "oklch(55.1% 0.027 264.364)"
+      color: 'oklch(55.1% 0.027 264.364)'
     });
   }
 </script>
@@ -111,18 +111,17 @@
       {/key}
     {/each}
 
-    <button class="rounded-lg border-2 border-dashed text-lg flex items-center justify-center w-full h-full" onclick={newProfile}>
+    <button
+      class="rounded-lg border-2 border-dashed text-lg flex items-center justify-center w-full h-full"
+      onclick={newProfile}
+    >
       + New Profile
     </button>
 
     <div class="flex flex-row gap-8 items-center justify-center">
-      <button class="bg-blue-500 w-24 h-12 rounded-lg" onclick={saveProfiles}>
-        Save
-      </button>
+      <button class="bg-blue-500 w-24 h-12 rounded-lg" onclick={saveProfiles}> Save </button>
 
-      <button class="bg-gray-300 w-24 h-12 rounded-lg" onclick={goto("/")}>
-        Cancel
-      </button>
+      <button class="bg-gray-300 w-24 h-12 rounded-lg" onclick={goto('/')}> Cancel </button>
     </div>
   </div>
 </div>
