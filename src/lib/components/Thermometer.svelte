@@ -18,11 +18,8 @@
   };
 
   let temperatureValue = initialTemperature;
-  let hasInitialized = false;
-
-  $: if (!hasInitialized && initialTemperature !== undefined) {
+  $: if (initialTemperature !== undefined) {
     temperatureValue = initialTemperature;
-    hasInitialized = true;
   }
 
   $: {

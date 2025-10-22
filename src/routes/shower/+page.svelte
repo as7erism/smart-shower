@@ -209,6 +209,8 @@
               callback={() => {
                 toggleProfilePopup();
                 currentProfile = name;
+                startingTemp = profiles[name].temperature;
+                startingPressure = profiles[name].pressure;
               }}
               {settings}
             />

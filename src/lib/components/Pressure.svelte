@@ -4,13 +4,10 @@
   const maxPressure = 80;
 
   let pressureValue = initialPressure;
-  let hasInitialized = false;
-
   let isDragging = false;
 
-  $: if (!hasInitialized && initialPressure !== undefined) {
+  $: if (initialPressure !== undefined) {
     pressureValue = initialPressure;
-    hasInitialized = true;
   }
 
   $: rotation = ((pressureValue - minPressure) / (maxPressure - minPressure)) * 180;
