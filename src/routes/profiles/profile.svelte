@@ -22,11 +22,11 @@
     </div>
   </div>
   <div class="flex items-center justify-center gap-1">
-    <input id={`${name}Temperature`} class="accent-gray-500" type="range" min="60" max="120" bind:value={temperature} />
+    <input id={`${name}Temperature`} class="accent-gray-500" type="range" min="48" max="109" bind:value={temperature} />
     <label for={`${name}Temperature`}>{temperature}° F</label>
   </div>
   <div class="flex items-center justify-center gap-1">
-    <input id={`${name}Pressure`} class="accent-gray-500" type="range" min="40" max="80" bind:value={pressure} />
+    <input id={`${name}Pressure`} class="accent-gray-500" type="range" min="23" max="80" bind:value={pressure} />
     <label for={`${name}Pressure`}>{pressure} PSI </label>
   </div>
 </div>
