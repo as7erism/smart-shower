@@ -17,12 +17,54 @@
     pressureUnit = settings.pressureUnit;
   });
 
+  function updateUnits(currentState) {
+    if (currentState.settings.temperatureUnit != temperatureUnit) {
+      switch (temperatureUnit) {
+        case "F":
+          currentState.profiles = Object.entries(currentState.profiles).reduce((profiles, [name, profile]) => {
+            profile.temperature = Math.floor((profile.temperature * 9 / 5) + 32);
+            profiles[name] = profile;
+            return profiles;
+          }, {})
+          break;
+        case "C":
+          currentState.profiles = Object.entries(currentState.profiles).reduce((profiles, [name, profile]) => {
+            profile.temperature = Math.floor((profile.temperature - 32) * 5 / 9);
+            profiles[name] = profile;
+            return profiles;
+          }, {})
+          break;
+      }
+    }
+
+    if (currentState.settings.pressureUnit != pressureUnit) {
+      switch (pressureUnit) {
+        case "Bar":
+          currentState.profiles = Object.entries(currentState.profiles).reduce((profiles, [name, profile]) => {
+            profile.pressure = Math.floor(profile.pressure / 14.504);
+            profiles[name] = profile;
+            return profiles;
+          }, {})
+          break;
+        case "PSI":
+          currentState.profiles = Object.entries(currentState.profiles).reduce((profiles, [name, profile]) => {
+            profile.pressure = Math.floor(profile.pressure * 14.504);
+            profiles[name] = profile;
+            return profiles;
+          }, {})
+          break;
+      }
+    }
+
+    currentState.settings.temperatureUnit = temperatureUnit;
+    currentState.settings.pressureUnit = pressureUnit;
+
+    return currentState;
+  }
+
   function saveSettings() {
     const currentState = getState();
-    const newState = {
-      ...currentState,
-      settings: { temperatureUnit, pressureUnit }
-    };
+    const newState = updateUnits(currentState);
     saveState(newState);
 
     toggleSettings();
