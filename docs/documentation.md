@@ -159,7 +159,7 @@ Changing the units on the settings page should actually update all units on the 
 This was left as future work to leave more time to work on the actual UI.
 
 ## Video
-![Video]()
+[Video](https://www.youtube.com/watch?v=6TSah24AGwA)
 
 ## Code
 [https://github.com/as7erism/smart-shower](https://github.com/as7erism/smart-shower)
