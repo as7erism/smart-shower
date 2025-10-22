@@ -5,7 +5,7 @@
   import SettingsPopup from '$lib/components/SettingsPopup.svelte';
 
   import Thermometer from '$lib/components/Thermometer.svelte';
-  import Pressure from '$lib/components/pressure.svelte';
+  import Pressure from '$lib/components/Pressure.svelte';
   import Waterlevel from '$lib/components/Waterlevel.svelte';
 
   import Profile from '$lib/components/Profiles.svelte';
