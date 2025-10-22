@@ -64,19 +64,23 @@
   }
 </script>
 
-{#each profiles as _, i}
-  <Profile
-    name={profiles[i].name}
-    bind:temperature={profiles[i].temperature}
-    bind:pressure={profiles[i].pressure}
-    onNameChange={nameChangeCallbackFactory(i)}
-  />
-{/each}
+<div class="flex flex-col items-center">
+  {#each profiles as _, i}
+    <div class="m-1">
+      <Profile
+        name={profiles[i].name}
+        bind:temperature={profiles[i].temperature}
+        bind:pressure={profiles[i].pressure}
+        onNameChange={nameChangeCallbackFactory(i)}
+      />
+    </div>
+  {/each}
 
-<button onclick={() => profiles.push({ name: newProfileName(), temperature: 100, pressure: 60 })}
-  >add</button
->
-<br />
-<button onclick={() => window.alert(JSON.stringify(profiles))}>check the thing</button>
-<br />
-<button onclick={saveProfiles}>save</button>
+  <button onclick={() => profiles.push({ name: newProfileName(), temperature: 100, pressure: 60 })}
+    >add</button
+  >
+  <br />
+  <button onclick={() => window.alert(JSON.stringify(profiles))}>check the thing</button>
+  <br />
+  <button onclick={saveProfiles}>save</button>
+</div>
