@@ -79,6 +79,7 @@
   <div class="flex p-4">
     <div class="flex-1">
       <button title="settings" onclick={() => (showSettings = true)}>
+      <button title="settings" onclick={() => (showSettings = true)}>
         <svg
           version="1.0"
           xmlns="http://www.w3.org/2000/svg"
@@ -202,6 +203,9 @@
         <h2 class="text-2xl font-bold text-center">Your Profiles</h2>
         <hr class="border-t-2 border-black/30" />
         <div class="grid grid-cols-2 gap-4">
+        <h2 class="text-2xl font-bold text-center">Your Profiles</h2>
+        <hr class="border-t-2 border-black/30" />
+        <div class="grid grid-cols-2 gap-4">
           {#each Object.entries(profiles) as [name, profile]}
             <Profile
               {name}
@@ -210,6 +214,7 @@
                 toggleProfilePopup();
                 currentProfile = name;
               }}
+              {settings}
               {settings}
             />
           {/each}
@@ -223,8 +228,18 @@
           </button>
         </div>
         <div class="flex justify-center">
+        <div class="flex justify-center">
+          <button
+            class="bg-gray-700 text-white text-xl px-5 py-3 rounded-xl shadow-md"
+            onclick={() => goto('/profiles')}
+          >
+            Edit Profiles
+          </button>
+        </div>
+        <div class="flex justify-center">
           <button
             onclick={toggleProfilePopup}
+            class="bg-red-500 px-5 py-3 rounded-xl shadow-md text-white"
             class="bg-red-500 px-5 py-3 rounded-xl shadow-md text-white"
           >
             Cancel
@@ -232,6 +247,18 @@
         </div>
       </div>
     </div>
+  </div>
+{/if}
+
+{#if showSettings}
+  <div class="fixed inset-0 flex items-center justify-center z-50">
+    <SettingsPopup
+      toggleSettings={() => (showSettings = !showSettings)}
+      refreshState={() => {
+        const s = getState();
+        settings = s.settings;
+      }}
+    />
   </div>
 {/if}
 
