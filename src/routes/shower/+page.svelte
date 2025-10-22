@@ -242,3 +242,15 @@
     <SettingsPopup toggleSettings={() => (showSettings = !showSettings)} />
   </div>
 {/if}
+
+{#if showSettings}
+  <div class="fixed inset-0 flex items-center justify-center z-50">
+    <SettingsPopup
+      toggleSettings={() => (showSettings = !showSettings)}
+      refreshState={() => {
+        const s = getState();
+        settings = s.settings;
+      }}
+    />
+  </div>
+{/if}
