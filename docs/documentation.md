@@ -101,13 +101,14 @@ Shower still depends on a depleteable water tank which it can sense the level of
 ### User Feedback
 
 #### Summarized Feedback
- - Users like the profile selection page and appreciate the countdown before a shower starts
- - Users would rather drag the temperature pressure controls than use plus and minus buttons
- - Despite not having a label the current shower duration timer was understood and appreciated
- - Users liked the idea of being able to swtich to another profile mid shower
+ - Users are confused about the T and P in the profiles on the choose a profile page
+ - Users think the + and - are too small on the shower page and would like to see other methods of controlling the temperature and pressure
+ - Users like the profile editing page and believe it is straight forward for its purpose
+ - Users are confused about the start shower popup but after clarification understand its use as a countdown timer and think it is good to add
 
 #### Feedback From Users
 ![User Feedback 1](./images/sketch_user_feedback_1.jpg)
+![User Feedback 2](./images/sketch_feedback_3.png)
 
 ## User Interface
 First, the interface was designed for a 640x854 resolution.
