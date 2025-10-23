@@ -2,7 +2,7 @@
 The goal of this project was to design the interface for a smart device.
 
 Our group chose to design a smart shower.
-Our smart shower has exact temperature and pressure control along with a remaining hot water display.
+Our smart shower has exact temperature and pressure control along with a remaining hot water display. Along with this our smart shower has profiles which can be created, updated, and deleted by the user.
 
 We also simulated a depletable hot water tank.
 If the hot water runs out then temperature of the shower will slowly deplete.
@@ -116,9 +116,9 @@ The main interface is touch screen without any physical knobs or dials.
 It is important to note that the device is so smart that it does not need to warmup.
 
 ### Select Profile Page
-A shower beings by a user selecting a profile they they have previously created.
-They can also edit or create a new profile before their shower.
-There is a 5 second countdown before starting the water that can be cancled.
+A shower begins by a user selecting a profile they previously created.
+The user can also edit or create a new profile before starting their shower.
+There is a 5 second countdown before starting the water that can be canceled.
 
 ![Profile Page](./images/select_profile_page.png)
 
@@ -156,12 +156,13 @@ New profiles can also be created on this screen.
 This is a multipage svelte kit project.
 State is presisted using `localStorage` to store a json object.
 There are various svelte components that are reused across the app.
-Tailwind is used heavly with very little actual css.
+Tailwind is used heavily with very little actual css.
 We hosted this project on vercel.
 
 ## Future Work
 Changing the units on the settings page should actually update all units on the app.
 This was left as future work to leave more time to work on the actual UI.
+Along with this, tracking shower data such that users can see their prior shower duration, temperature over time, and profiles used.
 
 ## Video
 [Video](https://www.youtube.com/watch?v=6TSah24AGwA)
