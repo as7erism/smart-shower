@@ -108,6 +108,7 @@ Shower still depends on a depleteable water tank which it can sense the level of
 
 #### Feedback From Users
 ![User Feedback 1](./images/sketch_user_feedback_1.jpg)
+![User Feedback 2](./images/sketch_feedback_3.jpg)
 
 ## User Interface
 First, the interface was designed for a 640x854 resolution.
